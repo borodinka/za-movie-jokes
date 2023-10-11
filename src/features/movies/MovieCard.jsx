@@ -29,7 +29,7 @@ function MovieCard({ id, title, poster, overview }) {
         <Text color="gray.700">{overview.substring(0, 50) + "..."}</Text>
       </CardBody>
       <CardFooter pt={2}>
-        <Link to={`/movie/${id}`} style={{ width: "100%" }}>
+        <Link to={`/movies/${id}`} style={{ width: "100%" }}>
           <Button m="auto" bg="green.300" color="white" w="100%">
             View joke & more
           </Button>
