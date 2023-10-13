@@ -20,26 +20,24 @@ import {
   Text,
 } from "@chakra-ui/react";
 import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { ruleAdded, ruleRemoved } from "./aiJokesSlice";
+
+const initialFormState = { name: "", description: "" };
 
 function JokesSettings() {
-  const [form, setForm] = useState({ name: "", description: "" });
-  const [rules, setRules] = useState([
-    { name: "Joke type", description: "Programmer" },
-  ]);
+  const dispatch = useDispatch();
+  const [form, setForm] = useState(initialFormState);
+  const rules = useSelector((state) => state.aiJokes.rules);
 
   const handleRuleRemove = (ruleName) => {
-    const ruleIndex = rules.findIndex((rule) => rule.name === ruleName);
-    if (ruleIndex < 0) return;
-
-    const newRules = [...rules];
-    newRules.splice(ruleIndex, 1);
-
-    setRules(newRules);
+    dispatch(ruleRemoved(ruleName));
   };
 
   const handleAddRule = (event) => {
     event.preventDefault();
-    setRules([...rules, form]);
+    dispatch(ruleAdded(form));
+    setForm(initialFormState);
   };
 
   return (
@@ -62,6 +60,7 @@ function JokesSettings() {
                   width="100%"
                   justifyContent="space-between"
                   alignItems="center"
+                  mb={1}
                 >
                   <Text>
                     <Badge mr={2} colorScheme="purple">
