@@ -1,7 +1,7 @@
-import { data } from "./data";
-import MovieCard from "./MovieCard";
 import { Heading, SimpleGrid } from "@chakra-ui/react";
 import { MOVIEDB_IMAGES_URL } from "src/common/constants";
+import { data } from "./data";
+import MovieCard from "./MovieCard";
 
 function MoviesList() {
   return (
