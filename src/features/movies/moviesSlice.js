@@ -4,7 +4,7 @@ import { fetchPopularMovies } from "./api";
 const initialState = {
   movies: [],
   status: "idle", // 'idle' / 'loading' / 'succeeded' / 'failed'
-  eror: null,
+  error: null,
 };
 
 export const fetchMovies = createAsyncThunk("movies/fetchMovies", async () => {
