@@ -18,7 +18,7 @@ export const fetchJoke = createAsyncThunk(
   }
 );
 
-const aiJokesSlive = createSlice({
+const aiJokesSlice = createSlice({
   name: "ai-jokes",
   initialState,
   reducers: {
@@ -61,8 +61,8 @@ const aiJokesSlive = createSlice({
   },
 });
 
-export const { ruleAdded } = aiJokesSlive.actions;
+export const { ruleAdded } = aiJokesSlice.actions;
 
-export const { ruleRemoved } = aiJokesSlive.actions;
+export const { ruleRemoved } = aiJokesSlice.actions;
 
-export default aiJokesSlive.reducer;
+export default aiJokesSlice.reducer;
