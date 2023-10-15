@@ -23,19 +23,19 @@ const moviesSlive = createSlice({
       })
       .addCase(fetchMovies.fulfilled, (state, action) => {
         state.status = "succeeded";
-        state.movies = action.paylod.results;
+        state.movies = action.payload.results;
       })
       .addCase(fetchMovies.rejected, (state, action) => {
         state.status = "failed";
-        state.eror = action.error.message;
+        state.error = action.error.message;
       });
   },
 });
 
-export const selectAllMovies = (state) => state.movies;
-export const selectMoviesStatus = (state) => state.status;
-export const selectMoviesError = (state) => state.error;
+export const selectAllMovies = (state) => state.movies.movies;
+export const selectMoviesStatus = (state) => state.movies.status;
+export const selectMoviesError = (state) => state.movies.error;
 export const selectMovieById = (state, movieId) =>
-  state.movies.find((movie) => movie.id === Number(movieId));
+  state.movies.movies.find((movie) => movie.id === Number(movieId));
 
 export default moviesSlive.reducer;
