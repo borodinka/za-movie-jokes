@@ -61,8 +61,6 @@ const aiJokesSlice = createSlice({
   },
 });
 
-export const { ruleAdded } = aiJokesSlice.actions;
-
-export const { ruleRemoved } = aiJokesSlice.actions;
+export const { ruleAdded, ruleRemoved } = aiJokesSlice.actions;
 
 export default aiJokesSlice.reducer;

@@ -1,6 +1,5 @@
 import {
   Box,
-  Button,
   Card,
   CardBody,
   CardFooter,
@@ -10,10 +9,11 @@ import {
   Stack,
   Text,
 } from "@chakra-ui/react";
-import { Link, useParams } from "react-router-dom";
-import { MOVIEDB_IMAGES_URL } from "src/common/constants";
 import { ArrowBackIcon } from "@chakra-ui/icons";
+import { Link, useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
+import JokesGenerator from "src/features/ai-jokes/JokesGenerator";
+import { MOVIEDB_IMAGES_URL } from "src/common/constants";
 import { selectMovieById } from "./moviesSlice";
 
 function MovieDetails() {
@@ -49,9 +49,11 @@ function MovieDetails() {
             <Text py="2">{movie.overview}</Text>
           </CardBody>
           <CardFooter>
-            <Button bg="green.300" color="white">
-              Generate Joke
-            </Button>
+            <JokesGenerator
+              movieId={movie.id}
+              movieTitle={movie.title}
+              movieDescription={movie.overview}
+            />
           </CardFooter>
         </Stack>
       </Card>
