@@ -1,7 +1,13 @@
 import { Button } from "@chakra-ui/react";
+import { useSelector } from "react-redux";
+import { selectJokeByMovieId, selectJokesStatus } from "./aiJokesSlice";
 
 function JokesGenerator({ movieId, movieTitle, movieDescription }) {
+  const joke = useSelector((state) => selectJokeByMovieId(state, movieId));
+  const jokeStatus = useSelector(selectJokesStatus);
+
   const handleGenerateJoke = () => {};
+
   return (
     <Button
       isLoading={jokeStatus === "loading"}
