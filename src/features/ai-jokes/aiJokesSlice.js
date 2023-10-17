@@ -1,4 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import axios from "axios";
+import { OPENAI_COMPLETIONS_API_URL } from "src/common/constants";
 
 const initialState = {
   rules: [{ name: "Joke type", description: "Programmer" }],
@@ -11,10 +13,37 @@ const initialState = {
 
 export const fetchJoke = createAsyncThunk(
   "aiJokes/fetchJoke",
-  async ({ movieId }) => {
-    // const data = await fetchPopularMovies();
-    // return data.data;
-    return { movieId, joke: "Funny joke!" };
+  async ({ movieId, movieTitle, movieDescription }, thunkApi) => {
+    const state = thunkApi.getState();
+    const joke = selectJokeByMovieId(state, movieId);
+    const messages = [
+      {
+        role: "user",
+        content: `Movie Title: ${movieTitle}, Movie Description: ${movieDescription}, Joke:`,
+      },
+    ];
+
+    if (joke) {
+      messages.unshift({
+        role: "user",
+        content: `Don't use joke ${joke.joke}`,
+      });
+    }
+
+    const response = await axios.post(
+      OPENAI_COMPLETIONS_API_URL,
+      {
+        messages,
+        model: "gpt-3.5-turbo",
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${import.meta.env.VITE_OPENAI_API_KEY}`,
+        },
+      }
+    );
+
+    return { movieId, joke: response.data.choices[0].message.content };
   }
 );
 
