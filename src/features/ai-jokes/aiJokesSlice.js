@@ -18,7 +18,8 @@ export const fetchJoke = createAsyncThunk(
     const joke = selectJokeByMovieId(state, movieId);
     const rules = selectJokesRules(state);
     const rulesParams = rules.reduce(
-      (acc, rule) => `${acc} ${rule.name}: ${rule.description}\n, ""`
+      (acc, rule) => `${acc} ${rule.name}: ${rule.description}\n`,
+      "",
     );
 
     const messages = [
@@ -39,17 +40,17 @@ export const fetchJoke = createAsyncThunk(
       OPENAI_COMPLETIONS_API_URL,
       {
         messages,
-        model: "gpt-3.5-turbo",
+        model: "gpt-4o-mini",
       },
       {
         headers: {
           Authorization: `Bearer ${import.meta.env.VITE_OPENAI_API_KEY}`,
         },
-      }
+      },
     );
 
     return { movieId, joke: response.data.choices[0].message.content };
-  }
+  },
 );
 
 const aiJokesSlice = createSlice({
@@ -58,14 +59,14 @@ const aiJokesSlice = createSlice({
   reducers: {
     ruleAdded(state, action) {
       const ruleIndex = state.rules.findIndex(
-        (rule) => rule.name === action.payload.name
+        (rule) => rule.name === action.payload.name,
       );
       if (ruleIndex >= 0) return;
       state.rules.push(action.payload);
     },
     ruleRemoved(state, action) {
       const ruleIndex = state.rules.findIndex(
-        (rule) => rule.name === action.payload
+        (rule) => rule.name === action.payload,
       );
       if (ruleIndex < 0) return;
       state.rules.splice(ruleIndex, 1);
@@ -78,7 +79,7 @@ const aiJokesSlice = createSlice({
       })
       .addCase(fetchJoke.fulfilled, (state, action) => {
         state.jokes.status = "succeeded";
-        state.jokes[action.payload.movieId] = action.payload.joke;
+        state.jokes.jokes[action.payload.movieId] = action.payload.joke;
       })
       .addCase(fetchJoke.rejected, (state, action) => {
         state.jokes.status = "failed";
